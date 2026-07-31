@@ -27,7 +27,11 @@ const AppliedJobsTable = () => {
         </TableHeader>
         <TableBody>
           {allAppliedJobs.length <= 0 ? (
-            <span>You haven't applied to any Job yet</span>
+            <TableRow>
+              <TableCell colSpan={4} className="text-center text-muted-foreground">
+                You haven't applied to any Job yet
+              </TableCell>
+            </TableRow>
           ) : (
             allAppliedJobs.map((appliedJob) => (
               <TableRow key={appliedJob._id}>

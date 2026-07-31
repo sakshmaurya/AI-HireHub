@@ -2,7 +2,7 @@ import { Avatar, AvatarImage } from "../components/ui/avatar";
 import Navbar from "../components/shared/Navbar";
 import React, { useState } from "react";
 import { Button } from "../components/ui/button";
-import { Contact, Mail, Pen, MapPin, Calendar, FileText, Award, TrendingUp } from "lucide-react";
+import { Contact, Mail, Pen, MapPin, Calendar, FileText, Award, TrendingUp, Bot } from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { Label } from "../components/ui/label";
 import AppliedJobsTable from "../components/AppliedJobsTable";
@@ -170,7 +170,7 @@ const Profile = () => {
             Resume
           </h2>
           {user?.profile?.resume ? (
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg mb-4">
               <div className="flex items-center gap-3">
                 <div className="bg-blue-100 p-2 rounded-lg">
                   <FileText className="w-5 h-5 text-blue-600" />
@@ -198,7 +198,7 @@ const Profile = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center py-8 bg-gray-50 rounded-lg">
+            <div className="text-center py-8 bg-gray-50 rounded-lg mb-4">
               <FileText className="w-12 h-12 text-gray-400 mx-auto mb-2" />
               <p className="text-gray-500">No resume uploaded yet</p>
               <Button
@@ -209,6 +209,109 @@ const Profile = () => {
               </Button>
             </div>
           )}
+
+          {/* ATS Analysis Section */}
+          {user?.profile?.resumeAnalysis && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-6 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl border border-purple-100"
+            >
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <TrendingUp className="text-purple-600" />
+                ATS Analysis & AI Recommendations
+              </h3>
+              
+              {/* ATS Score */}
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">ATS Score</span>
+                  <span className="text-2xl font-bold text-purple-600">
+                    {user?.profile?.resumeAnalysis?.score || 0}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div
+                    className="h-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500"
+                    style={{ width: `${user?.profile?.resumeAnalysis?.score || 0}%` }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Summary */}
+              <div className="mb-4">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">Summary</h4>
+                <p className="text-sm text-gray-600 bg-white p-3 rounded-lg">
+                  {user?.profile?.resumeAnalysis?.summary || "No analysis available"}
+                </p>
+              </div>
+
+              {/* Detected Skills */}
+              {user?.profile?.resumeAnalysis?.skills?.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Detected Skills</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {user?.profile?.resumeAnalysis?.skills.map((skill, index) => (
+                      <Badge
+                        key={index}
+                        className="bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1 text-sm"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Missing Skills */}
+              {user?.profile?.resumeAnalysis?.missingSkills?.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Recommended Skills to Add</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {user?.profile?.resumeAnalysis?.missingSkills.map((skill, index) => (
+                      <Badge
+                        key={index}
+                        className="bg-orange-100 text-orange-700 hover:bg-orange-200 px-3 py-1 text-sm"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Suggestions */}
+              {user?.profile?.resumeAnalysis?.suggestions?.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">AI Suggestions</h4>
+                  <ul className="space-y-2">
+                    {user?.profile?.resumeAnalysis?.suggestions.map((suggestion, index) => (
+                      <li key={index} className="text-sm text-gray-600 bg-white p-3 rounded-lg flex items-start gap-2">
+                        <span className="text-purple-600 mt-1">•</span>
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* AI Job Recommendations Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mt-4"
+          >
+            <Button
+              onClick={() => navigate("/chat")}
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+            >
+              <Bot className="w-4 h-4 mr-2" />
+              Get AI Job Recommendations
+            </Button>
+          </motion.div>
         </motion.div>
 
         {/* Quick Actions */}

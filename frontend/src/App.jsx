@@ -9,6 +9,11 @@ import Profile from "./pages/Profile";
 import SavedJobs from "./pages/SavedJobs";
 import StudentAnalytics from "./pages/StudentAnalytics";
 import RecruiterAnalytics from "./pages/RecruiterAnalytics";
+import ResumeBuilder from "./pages/ResumeBuilder";
+import Settings from "./pages/Settings";
+import AdminDashboard from "./pages/AdminDashboard";
+import Notifications from "./pages/Notifications";
+import Chat from "./pages/Chat";
 import JobDescription from "./components/JobDescription";
 import Companies from "./components/admin/Companies";
 import CompanyCreate from "./components/admin/CompanyCreate";
@@ -124,6 +129,46 @@ const appRouter = createBrowserRouter([
       <RecruiterRoute>
         <Applicants />
       </RecruiterRoute>
+    ),
+  },
+  {
+    path: "/resume-builder",
+    element: (
+      <PrivateRoute>
+        <ResumeBuilder />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/settings",
+    element: (
+      <PrivateRoute>
+        <Settings />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/notifications",
+    element: (
+      <PrivateRoute>
+        <Notifications />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/chat",
+    element: (
+      <PrivateRoute>
+        <Chat />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/admin/dashboard",
+    element: (
+      <PrivateRoute>
+        <AdminDashboard />
+      </PrivateRoute>
     ),
   },
 ]);

@@ -14,6 +14,8 @@ import applicationRouter from "./routes/application.route.js";
 import savedJobRouter from "./routes/savedJob.route.js";
 import analyticsRouter from "./routes/analytics.route.js";
 import resumeRouter from "./routes/resume.route.js";
+import chatRouter from "./routes/chat.route.js";
+import skillAssessmentRouter from "./routes/skillAssessment.route.js";
 
 const app = express();
 
@@ -24,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "http://localhost:5174",
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -38,6 +40,8 @@ app.use("/api/saved-job", savedJobRouter);
 app.use("/api/analytics", analyticsRouter);
 app.use("/api/ai", aiRoute);
 app.use("/api/resume", resumeRouter);
+app.use("/api/chat", chatRouter);
+app.use("/api/assessment", skillAssessmentRouter);
 
 app.use(express.static(path.join(__dirname, "frontend/dist")));
 app.get("*", (req, res) => {
